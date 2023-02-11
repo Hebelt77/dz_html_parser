@@ -8,7 +8,7 @@ import pprint
 'https://www.technopark.ru/noutbuki/otzyvy/'
 
 Domain = 'https://www.technopark.ru'
-url_domain = f'{Domain}/noutbuki/otzyvy/'
+url_domain = f'{Domain}/noutbuki/otzyvy'
 
 headers = {
 'authority': 'www.technopark.ru',
@@ -20,7 +20,7 @@ headers = {
 'accept-language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
 'cache-control': 'max-age=0',
     # Перед запуском необходимо обновить cookie
-'cookie': '__utmc=24718655; __utmz=24718655.1675970333.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not provided); stest201=1; stest207=acc0; stest209=ct1; tp_city_id=36966; PHPSESSID=d224b10fca46a0e58107302c16d85162; _userGUID=0:ldxhgtiv:LSicM3bSFWVXCUU3kmfchS7V7Q~Yneso; c2d_widget_id={"9eb3fbdda817d48faffc65c3446228e8":"[chat] b085ed20a7ae2e8c7a09"}; promo1000closed=true; user_public_id=rG7769ixeVirPjKiaWDcRoZpfVrCxs+nG8gj5huddNNpa2rEv7/4akwMzvGHa3sJ; TP_auth=v3m+Q54kIOOCwEWbmNnQuM2PTObdyY/XJ7GLX/ZZilUrUXnX2Gq1mtTcyoRwbvX/; __utma=24718655.218871119.1675970333.1676111252.1676115273.9; visitedPagesNumber=99; __utmb=24718655.15.10.1676115273; qrator_jsid=1676117084.703.ASYkQyRBS1195hZS-dihoq6tc7dpgtklr2rf65i36hhimil7s',
+'cookie': '__utmc=24718655; __utmz=24718655.1675970333.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not provided); stest201=1; stest207=acc0; stest209=ct1; tp_city_id=36966; PHPSESSID=d224b10fca46a0e58107302c16d85162; _userGUID=0:ldxhgtiv:LSicM3bSFWVXCUU3kmfchS7V7Q~Yneso; c2d_widget_id={"9eb3fbdda817d48faffc65c3446228e8":"[chat] b085ed20a7ae2e8c7a09"}; promo1000closed=true; user_public_id=rG7769ixeVirPjKiaWDcRoZpfVrCxs+nG8gj5huddNNpa2rEv7/4akwMzvGHa3sJ; TP_auth=v3m+Q54kIOOCwEWbmNnQuM2PTObdyY/XJ7GLX/ZZilUrUXnX2Gq1mtTcyoRwbvX/; visitedPagesNumber=101; qrator_jsr=1676123027.736.ieg2UcwphyRwdnua-r6csdsjs7t2upg487df380hq5tkf3v0l-00; __utma=24718655.218871119.1675970333.1676115273.1676123029.10; __utmt=1; __utmb=24718655.1.10.1676123029; qrator_jsid=1676123027.736.ieg2UcwphyRwdnua-u7tmnnjakeec4c8sbptvk0she4f7st1f',
 
 # 'if-none-match': '"93564-XsmwJOoGldAVO6U0yd6ef9u6Xa4"',
 'sec-ch-ua': '"Not_A Brand";v="99", "Google Chrome";v="109", "Chromium";v="109"',
@@ -39,9 +39,9 @@ pages = 6
 for page in range(1, pages):            # Перебираем страницы с товарами
     print(f'Ищем на странице {page}')
     if page == 1:
-        page = None
+        page = '/'
     else:
-        page = f'?p={str(page)}'
+        page = f'/?p={str(page)}'
 
     response = requests.get(f'{url_domain}{page}', headers=headers)
     print(response.status_code)
@@ -87,6 +87,9 @@ for page in range(1, pages):            # Перебираем страницы 
                     comments[key] = value
                 else:
                     comments[key].extend(value)  # Расширяем списки по ключам
+
+                # comments.setdefault(key, value)  # Добавляем ключ значение если таких нет
+
             result['reviews'] = comments  # Добавляем комментарии в словарь
 
         results.append(result)
