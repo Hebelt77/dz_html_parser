@@ -20,7 +20,7 @@ headers = {
 'accept-language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
 'cache-control': 'max-age=0',
     # Перед запуском необходимо обновить cookie
-'cookie': '__utmc=24718655; __utmz=24718655.1675970333.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not provided); stest201=1; stest207=acc0; stest209=ct1; tp_city_id=36966; PHPSESSID=d224b10fca46a0e58107302c16d85162; _userGUID=0:ldxhgtiv:LSicM3bSFWVXCUU3kmfchS7V7Q~Yneso; c2d_widget_id={"9eb3fbdda817d48faffc65c3446228e8":"[chat] b085ed20a7ae2e8c7a09"}; promo1000closed=true; user_public_id=rG7769ixeVirPjKiaWDcRoZpfVrCxs+nG8gj5huddNNpa2rEv7/4akwMzvGHa3sJ; TP_auth=v3m+Q54kIOOCwEWbmNnQuM2PTObdyY/XJ7GLX/ZZilUrUXnX2Gq1mtTcyoRwbvX/; visitedPagesNumber=101; qrator_jsr=1676123027.736.ieg2UcwphyRwdnua-r6csdsjs7t2upg487df380hq5tkf3v0l-00; __utma=24718655.218871119.1675970333.1676115273.1676123029.10; __utmt=1; __utmb=24718655.1.10.1676123029; qrator_jsid=1676123027.736.ieg2UcwphyRwdnua-u7tmnnjakeec4c8sbptvk0she4f7st1f',
+'cookie': '__utmc=24718655; __utmz=24718655.1675970333.1.1.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not provided); stest201=1; stest207=acc0; stest209=ct1; tp_city_id=36966; PHPSESSID=d224b10fca46a0e58107302c16d85162; _userGUID=0:ldxhgtiv:LSicM3bSFWVXCUU3kmfchS7V7Q~Yneso; c2d_widget_id={"9eb3fbdda817d48faffc65c3446228e8":"[chat] b085ed20a7ae2e8c7a09"}; promo1000closed=true; user_public_id=rG7769ixeVirPjKiaWDcRoZpfVrCxs+nG8gj5huddNNpa2rEv7/4akwMzvGHa3sJ; __utma=24718655.218871119.1675970333.1676115273.1676123029.10; qrator_jsid=1676123027.736.ieg2UcwphyRwdnua-4g3lg4neaud68trhmfjmmoec4dvgoqcd; dSesn=f3268aac-d323-7118-7c40-a017d7c85c01; TP_auth=MI49/W9Au8BCFmMzU3cySMLJSG2g9gIRr2MZm68ViSupFnDnnjq0RgzpjGgVAmT2; _dvs=0:ldydisgc:kIjCbM40tCmlcQDV86bvfM8eI9XpA0ry; visitedPagesNumber=128; __utmb=24718655.27.10.1676123029',
 
 # 'if-none-match': '"93564-XsmwJOoGldAVO6U0yd6ef9u6Xa4"',
 'sec-ch-ua': '"Not_A Brand";v="99", "Google Chrome";v="109", "Chromium";v="109"',
@@ -34,9 +34,14 @@ headers = {
 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36'
 }
 
-results = []  # Список с результатами поиска
-pages = 6
-for page in range(1, pages):            # Перебираем страницы с товарами
+
+get = requests.get(url_domain, headers=headers)         # Узнаём количество страниц
+soup = BeautifulSoup(get.text, 'html.parser')
+pages = (soup.find_all('button', class_='tp-pagination-button')[-1].text).replace(' ', '')
+
+
+results = []                                    # Список с результатами поиска
+for page in range(1, int(pages) + 1):            # Перебираем страницы с товарами
     print(f'Ищем на странице {page}')
     if page == 1:
         page = '/'
