@@ -36,13 +36,12 @@ headers = {
 
 results = []  # Список с результатами поиска
 pages = 6
-for page in range(1, pages):            # Перебираем страницы с вакансиями
+for page in range(1, pages):            # Перебираем страницы с товарами
     print(f'Ищем на странице {page}')
     if page == 1:
         page = None
     else:
         page = f'?p={str(page)}'
-        print(page)
 
     response = requests.get(f'{url_domain}{page}', headers=headers)
     print(response.status_code)
